@@ -5,6 +5,7 @@ import * as logger from "morgan";
 
 import { connectionServerDB } from "./config/db";
 import { errorMiddleware } from "./app/middlewares/error";
+import { routes } from "./app/routes/routes";
 
 export const app = express();
 
@@ -13,5 +14,7 @@ app.use(logger("dev"));
 app.use(cors());
 
 app.use(errorMiddleware);
+
+app.use(routes);
 
 connectionServerDB();
