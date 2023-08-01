@@ -1,8 +1,10 @@
 import { Request, Response } from "express";
+import * as jwt from "jsonwebtoken";
 import * as bcrypt from "bcrypt";
 
 import { userRepository } from "../repositories/userRepository";
 import { notFoundError, unauthorizedError } from "../helpers/apiError";
+import authConfig from "../../config/authConfig";
 
 class SessionController {
   async create(req: Request, res: Response): Promise<Response> {
@@ -21,8 +23,14 @@ class SessionController {
     const { id, name } = user;
 
     return res.json({
-      id, 
-      name
+      user: {
+        id, 
+        name,
+        email
+      }, 
+      token: jwt.sign({ id }, authConfig.secret, {
+        expiresIn: authConfig.expiresIn
+      })
     })
   }
 }

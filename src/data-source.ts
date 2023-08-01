@@ -1,4 +1,4 @@
-import "reflect-metadata";
+ import "reflect-metadata";
 import { DataSource } from "typeorm";
 import { User } from "./entity/User";
 import * as dotenv from "dotenv";
@@ -9,9 +9,9 @@ export const AppDataSource = new DataSource({
     type: "postgres",
     host: "localhost",
     port: 5432,
-    username: process.env.USERNAME,
+    username: "postgres",
     password: process.env.PASSWORD,
-    database: process.env.DATABASE,
+    database: "taskList",
     synchronize: true,
     logging: false,
     entities: [User],
