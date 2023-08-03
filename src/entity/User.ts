@@ -1,4 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany } from "typeorm";
+
+import { Task } from "./Task";
 
 @Entity("users")
 export class User {
@@ -14,6 +16,9 @@ export class User {
 
   @Column({ type: "text" })
   public password_hash: string
+
+  @OneToMany(() => Task, (task) => task.user )
+  public tasks: Task[]
 
   @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)" })
   readonly created_at: Date
