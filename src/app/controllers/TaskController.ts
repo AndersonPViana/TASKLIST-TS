@@ -62,6 +62,30 @@ class TaskController {
       }
     });
   }
+
+  async delete(req: CustomRequest, res: Response): Promise<Response> {
+    const { id } = req.params;
+
+    const user = req.user;
+
+    if(!user) {
+      throw new notFoundError("user not found");
+    }
+
+    const task = await taskRepository.findOne({ where: { id: Number(id), user: {id: user.id} }, relations: ["user"] });
+
+    if(!task) {
+      throw new unauthorizedError("task is not user");
+    }
+
+    if(task.check == false) {
+      throw new unauthorizedError("task cannot be deleted");
+    }
+
+    await taskRepository.delete(task.id)
+
+    return res.json({ message: "task deleted" });
+  }
 }
 
 export default new TaskController();
