@@ -16,3 +16,5 @@ routes.use(authMiddleware);
 routes.put("/users", UserController.update);
 
 routes.post("/tasks", TaskController.create);
+
+routes.put("/tasks/:id", TaskController.update);
