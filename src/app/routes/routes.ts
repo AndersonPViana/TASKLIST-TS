@@ -20,3 +20,5 @@ routes.post("/tasks", TaskController.create);
 routes.put("/tasks/:id", TaskController.update);
 
 routes.delete("/tasks/:id", TaskController.delete);
+
+routes.get("/tasks", TaskController.filter);

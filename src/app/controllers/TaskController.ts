@@ -86,6 +86,22 @@ class TaskController {
 
     return res.json({ message: "task deleted" });
   }
+
+  async filter(req: CustomRequest, res: Response): Promise<Response> {
+    const user = req.user;
+
+    if(!user) {
+      throw new notFoundError("user not found");
+    }
+
+    const tasks = await taskRepository.find({ where: { user: { id: user.id } } });
+
+    if(!tasks) {
+      throw new notFoundError("user has no task")
+    }
+
+    return res.json({ tasks })
+  }
 }
 
 export default new TaskController();
